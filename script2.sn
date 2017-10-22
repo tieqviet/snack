@@ -1,0 +1,6 @@
+$def PI 3.14
+$def max(a, b) a > b 
+
+a=PI*5;
+
+max(a,b);
