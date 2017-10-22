@@ -63,3 +63,5 @@ a("Hi, I'm a scirpt!");
 - Run the executable with command line prompt with the last agrument as filename and other arguments as options
 - Options list:
 	* -e: Stop at the preprocessing step and print the result to the standard i/o. If there is no compiling option, the complier does it normals.
+	
+- The code is extremely ugly and unoptimized right now.
