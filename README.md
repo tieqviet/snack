@@ -3,12 +3,11 @@
 Scripting language that uses LLVM as backend, compiled code, JITing or Intepretering. 
 Has the ability to generate fully dynamic reflection by a post-precessor
 
-![Design]()
+![Design](https://github.com/bentokun/snack/blob/master/design.png)
 
+**Example:**
 
-Example
-
-```
+```python
 #Snack Programming Language
 #Copyright (C) 2017 dotrongthu
 #Copyright (C) 2017 LLVM Project
