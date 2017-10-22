@@ -69,7 +69,7 @@ namespace snack {
 
 		pos = input->tellg();
 
-		std::cout << "PARSED MARCO INTO FILE AT POS: " << pos << std::endl;
+		//std::cout << "PARSED MARCO INTO FILE AT POS: " << pos << std::endl;
 		return true;
 	}
 
@@ -108,8 +108,7 @@ namespace snack {
 	}
 
 	s8 spis::peek() {
-		std::cout << "POS: " << input->tellg() <<"  "<< input->rdstate() << std::endl;
-
+		//std::cout << "POS: " << input->tellg() <<"  "<< input->rdstate() << std::endl;
 		return input->peek();
 	}
 

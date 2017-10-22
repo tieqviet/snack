@@ -8,9 +8,8 @@ using
 
 $def a(x) std::cout << x
 
-str_ha = 'string'
-is_true = 2 <> 5.4
-
+str_ha = 'string';
+is_true = 2 <> 5.4;
 
 func max with a as int, b as int: int; 
 bg
@@ -58,13 +57,4 @@ bg
 	end
 end
 
-[string a = 5]
-func a5 <T> : integer; 
-bg
-
-end
-
-get_annotation(a5, "a");
-parameters = get_function_parameters(a5<int>);
-
-a4(5);
+a("Hi, I'm a scirpt!");

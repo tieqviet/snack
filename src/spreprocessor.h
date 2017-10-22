@@ -20,6 +20,10 @@ namespace snack {
 		"prag"
 	};
 
+	int compare(std::string lhs, std::string rhs) {
+		return (lhs < rhs) ? -1 : ((lhs == rhs) ? 0 : 1);
+	}
+
 	struct smarco {
 		std::string name;
 
@@ -29,6 +33,8 @@ namespace snack {
 
 	struct spreprocessor {
 		
+		spreprocessor() = default;
+
 		spreprocessor(tokenizer& p_lexer) : lexer(p_lexer) {
 			lexer.optional_tokens_set_visibility(false);
 		}
@@ -38,30 +44,23 @@ namespace snack {
 		tokenizer lexer;
 
 		bool _is_preprocess_word(std::string p_val) {
-			return _preprocess_word_pos(0, PRPRWC - 1, p_val) != -1;
+			return search<std::string>(std::vector<std::string>(std::begin(preprocess_keywords), std::end(preprocess_keywords)), p_val, compare_func<std::string>(&compare)) != -1;
 		}
 
-		u32 _preprocess_word_pos(u32 bg, u32 end, std::string p_val) {
-			/*
-			if (end >= bg) {
-				int mid = bg + (end - bg) / 2;
+		s32 _preprocess_word_pos(s32 bg, s32 end, std::string p_val) {
+			
+			if (bg > end)
+				return -1;
 
-				if (preprocess_keywords[mid] == p_val)
-					return mid;
-				else if (preprocess_keywords[mid] < p_val)
-					return _preprocess_word_pos(bg, mid++, p_val);
-				else if (preprocess_keywords[mid] > p_val)
-					return _preprocess_word_pos(mid--, end, p_val);
-			}
+			int mid = (bg + end) / 2;
 
-			return -1;*/
+			if (preprocess_keywords[mid] == p_val)
+				return mid;
+			else if (preprocess_keywords[mid] < p_val)
+				return _preprocess_word_pos(mid + 1, end, p_val);
 
-			for (u32 i = bg; i <= end; i++) {
-				if (preprocess_keywords[i] == p_val)
-					return i;
-			}
+			return _preprocess_word_pos(bg, mid-1, p_val);
 
-			return -1;
 		}
 
 		bool _is_pr_line() {
@@ -112,6 +111,53 @@ namespace snack {
 
 			return paras;
 		}
+
+		std::vector<std::string> _parse_marco_paste_paras() {
+			std::vector<std::string> paras;
+
+			bool parentheses = true;
+			bool identified = false;
+
+			token tok;
+
+			tok = lexer.peek_next();
+
+			if (tok.value == "(") {
+
+				tok = lexer.get_next();
+
+				while (tok.value != ")") {
+					tok = lexer.get_next();
+
+					if ((tok.type == "var") || (tok.type == "str") || (tok.type == "num")) {
+						if (!identified) {
+							paras.push_back(tok.type == "str" ? std::string(1, '/"') + tok.value + std::string(1, '/"'): tok.value);
+
+							identified = true;
+						}
+						else {
+							complier_error("Expected )");
+						}
+						
+					}
+					else {
+						if (tok.value == ",") {
+							if (!identified) {
+								complier_error("Expected an identifier");
+							}
+							else
+								identified = false;
+						}
+						else if (tok.value != ")") {
+							complier_error("Unexpected identifier");
+						}
+					}
+				}
+			}
+
+			return paras;
+		}
+
 
 		std::string _parse_mar_cont() {
 			std::string marco_cont;
@@ -202,20 +248,51 @@ namespace snack {
 		}
 
 		s32 _find_marcos(token tok) {
-			for (u32 i = 0; i < defined_marcos.size(); i++) {
-				if (defined_marcos[i].name == tok.value) {
-					return i;
-				}
-			}
+			
+			if (defined_marcos.size() >= 1) {
+				if (defined_marcos.size() <= 5) {
+					for (u32 i = 0; i < defined_marcos.size(); i++) {
+						if (defined_marcos[i].name == tok.value)
+							return i;
+					}
 
+					return -1;
+				}
+
+				return _find_marcos_pos(0, defined_marcos.size() - 1, tok);
+			}
+			
 			return -1;
+		}
+
+		s32 _find_marcos_pos(s32 bg, s32 end, token tok) {
+			
+			if (bg > end)
+				return -1;
+
+			int mid = (bg + end) / 2;
+
+			if (defined_marcos[mid].name == tok.value)
+				return mid;
+			else if (defined_marcos[mid].name < tok.value)
+				return _find_marcos_pos(mid+1, end, tok);
+			
+			return _find_marcos_pos(bg, mid-1, tok);
+			
 		}
 
 		bool _paste_marco(smarco mar) {
 
 			u32 pos = lexer.get_pos_num() - mar.name.size();
 
-			std::vector<std::string> paras = _parse_marco_paras();
+			std::vector<std::string> paras = _parse_marco_paste_paras();
+
+			if (paras.size() != mar.template_parameters.size()) {
+				complier_error("Marco and specified marco doesn't match parameters's size");
+
+				return false;
+			}
+
 			std::stringstream strstream(mar.main_marco);
 
 			std::string marco_cont = mar.main_marco;

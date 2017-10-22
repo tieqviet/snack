@@ -2,39 +2,57 @@
 #include "stokenizer.h"
 #include "spreprocessor.h"
 
-int main() {
-	std::ifstream stream("script2.sn");
-	
-	if (stream.fail()) {
-		std::cout << "FAILED!!" << std::endl;
+std::ifstream stream;
+
+snack::spis spiss;
+snack::tokenizer spist;
+snack::spreprocessor sproc;
+
+bool process_spec = false;
+
+void parse_argument(char* arg) {
+	if (*arg != '-') {
+		std::cout << "Invalid option: " << arg << std::endl;
 	}
 
-	snack::spis spiss(&stream, "script2.sn");
-	snack::tokenizer spist(spiss);
+	if ((strcmp(arg, "-e") == 0) && !process_spec) {
+		sproc.process();
 
-	snack::spreprocessor sproc(spist);
-	bool res = sproc.process();
+		process_spec = true;
+
+		std::cout << sproc.get_stream().data() << std::endl;
+		return;
+	}
+}
+
+int main(int argc, char** argv) {
+
+	if ((argv[argc - 1] == "") || (*argv[argc - 1] == '-')) {
+		std::cout << "File not specified. Try again!!" << std::endl;
+	}
+
+	stream.open(argv[argc - 1]);
 	
-	std::ofstream ostream("script2_process.sn");
-	
-	ostream << sproc.get_stream().data();
+	if (stream.fail()) {
+		std::cout << "File has bad bit or does not exists. Try again :)" << std::endl;
+		return 0;
+	}
 
 
-	/*
-	snack::token tok = spist.read_next();
-	snack::token tok2 = spist.read_next();
-	snack::token tok3 = spist.read_next();
-	snack::token tok4 = spist.read_next();
-	snack::token tok5 = spist.read_next();
-	snack::token tok6 = spist.read_next();
+	spiss = snack::spis(&stream, std::string(argv[argc - 1]));
+	spist = snack::spis(spiss);
 
-	snack::token tok1 = spist.read_next();
-	snack::token tok21 = spist.read_next();
-	snack::token tok31 = spist.read_next();
-	snack::token tok41 = spist.read_next();
-	snack::token tok51 = spist.read_next();
-	snack::token tok61 = spist.read_next();
-	*/
+	sproc = snack::spreprocessor(spist);
 
-	return 0;
+	for (u32 i = 1; i < argc - 1; i++) {
+		parse_argument(argv[i]);
+	}
+
+	if (!process_spec) {
+		sproc.process();
+	}
+
+	std::getchar();
+
+	return 1;
 }

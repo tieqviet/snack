@@ -206,10 +206,10 @@ namespace snack {
 		auto escaped = false;
 		std::string str;
 
-		//s8 c = input.next();
+		s8 c = input.next();
 
 		while (!input.eof()) {
-			s8 c = input.next();
+			c = input.next();
 
 			if (escaped) {
 				str += c;
