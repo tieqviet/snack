@@ -5,56 +5,10 @@
 using 
 	std,
 	math;
-
+	
 $def a(x) std::cout << x
 
 str_ha = 'string';
 is_true = 2 <> 5.4;
-
-func max with a as int, b as int: int; 
-bg
-	variable as u8 = $5213A52;
-	ab, ac as u8;
-
-	if a > b 
-	bg
-		ret a;
-	end
-	elif b > a
-	bg
-		ret b;
-	end
-
-	ret 0;
-end
-
-func check_type: none;
-bg
-end
-
-type integer as u32;
-
-struct p5 with
-	a as integer;
-	b as integer*;
-	c as penable;
-end
-
-class p6 with
-bg
-	public a as integer;
-
-	public 
-	bg
-		a as block;
-		b as p5;
-	end
-		
-	public lol123 as integer 
-	bg
-		get bg ret a; end;
-		set bg a = value; end;
-	end
-end
 
 a("Hi, I'm a scirpt!");

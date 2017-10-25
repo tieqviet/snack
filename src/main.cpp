@@ -40,7 +40,7 @@ int main(int argc, char** argv) {
 
 
 	spiss = snack::spis(&stream, std::string(argv[argc - 1]));
-	spist = snack::spis(spiss);
+	spist = snack::tokenizer(spiss);
 
 	sproc = snack::spreprocessor(spist);
 
@@ -52,7 +52,7 @@ int main(int argc, char** argv) {
 		sproc.process();
 	}
 
-	std::getchar();
+	spiss.set_pos(5);
 
 	return 1;
 }

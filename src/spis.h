@@ -16,11 +16,10 @@ namespace snack {
 	/* INPUT STREAM */
 	class spis {
 
-		std::stringstream* input;
-
+		std::stringstream input;
 		std::string fname;
 
-		std::multiset<u32> newline_counter;
+		std::set<u32> newline_counter;
 
 		u32 pos;
 		u32 line;
@@ -28,6 +27,7 @@ namespace snack {
 
 	public:
 
+		bool append(std::string dat);
 		bool write(std::string len, u32 pos);
 		bool erase(u32 bg, u32 end);
 
@@ -38,6 +38,8 @@ namespace snack {
 		spis(std::ifstream* input, std::string fn = std::string());
 		spis(std::stringstream* strstream, std::string fn = std::string());
 		spis();
+
+		spis(const spis& stream);
 
 		s8 next();
 		s8 peek();
@@ -52,6 +54,8 @@ namespace snack {
 		bool eof();
 
 		void set_pos(u32 pos);
+
+		void operator = (spis& rhs);
 
 	};
 

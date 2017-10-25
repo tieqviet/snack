@@ -328,6 +328,25 @@ namespace snack {
 			return true;
 		}
 
+		bool _parse_pre_incl_statement() {
+			token tok = lexer.get_next();
+
+			if (tok.type != "str") {
+				complier_error("Invalid parameter after incl");
+
+				return false;
+			}
+
+			std::ifstream fstream(tok.value);
+			spis stream(&fstream);
+
+			stream.append(lexer.get_stream().data());
+
+			lexer.get_stream() = stream;
+
+			return true;
+		}
+
 		bool process() {
 			token tok;
 
@@ -353,6 +372,9 @@ namespace snack {
 							//For now, we skip
 							//lexer.skip();
 							//Prag is now jus
+						}
+						else if (tok.value == "incl") {
+							_parse_pre_incl_statement();
 						}
 					}
 				}
