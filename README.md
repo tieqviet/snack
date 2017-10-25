@@ -3,12 +3,11 @@
 Scripting language that uses LLVM as backend, compiled code, JITing or Intepretering. 
 Has the ability to generate fully dynamic reflection by a post-precessor
 
-![Design]()
+![Design](https://github.com/bentokun/snack/blob/master/design.png)
 
+## Example
 
-Example
-
-```
+```python
 #Snack Programming Language
 #Copyright (C) 2017 dotrongthu
 #Copyright (C) 2017 LLVM Project
@@ -46,23 +45,10 @@ end
 
 type integer as u32;
 
-struct p5 with
-	a as integer;
-	b as integer*;
-	c as penable;
-end
-
 class p6 with
 bg
 	public a as integer;
-
-	public 
-	bg
-		a as block;
-		b as p5;
-	end
-		
-	public lol123 as integer 
+	public b as integer 
 	bg
 		get bg ret a; end;
 		set bg a = value; end;
@@ -71,7 +57,11 @@ end
 
 a("Hi, I'm a scirpt!");
 
-$undef a
-
-a(test);
 ```
+## Using the complier:
+- Compile the code using MSVC15
+- Run the executable with command line prompt with the last agrument as filename and other arguments as options
+- Options list:
+	* -e: Stop at the preprocessing step and print the result to the standard i/o. If there is no compiling option, the complier does it normals.
+	
+- The code is extremely ugly and unoptimized right now.
