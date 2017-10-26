@@ -2,11 +2,13 @@
 #Copyright (C) 2017 dotrongthu
 #Copyright (C) 2017 LLVM Project
 
+$incl 'script2.sn'
+
 using 
 	std,
 	math;
 	
-$def a(x) std::cout << x
+$def a(ppp) std::cout << ppp
 
 str_ha = 'string';
 is_true = 2 <> 5.4;

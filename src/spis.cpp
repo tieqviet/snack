@@ -156,7 +156,7 @@ namespace snack {
 
 		line++;
 		col = 0;
-		pos = input.tellg();
+		pos = u32(input.tellg()) + 1;
 
 		return tline;
 	}

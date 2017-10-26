@@ -37,23 +37,24 @@ namespace snack {
 	}
 
 	bool is_op_char(s8 c) {
+		std::string str(1, c);
+		std::smatch m;
 
-		if ((c == '/') || (c == '&') || (c == '|') ||
-			(c == '+') || (c == '-') || (c == '!') || (c == '%') ||
-			(c == '*') || (c == '<') || (c == '>') || (c == '=') || (c=='$') || (c==':')
-			|| (c == '"') || (c=='\''))
-			return true;
-
-		return false;
+		bool res = std::regex_search(str, m, std::regex("[$\"=%:*+-><=\'!|&]"));
+	
+		return res;
 
 	}
 
 	bool is_punc(s8 c) {
-		if ((c == '{') || (c == '}') || (c == ',') || (c == ';') || (c == '(') || (c == ')')) {
-			return true;
-		}
 
-		return false;
+		std::string str(1, c);
+		std::smatch m;
+
+		bool res = std::regex_search(str, m, std::regex("[(),;{}]"));
+
+		return res;
+
 	}
 
 	bool is_whitespace(s8 c) {
@@ -243,14 +244,14 @@ namespace snack {
 	}
 
 	token tokenizer::read_ident(u8 ch) {
-		std::string id = /*std::string(1, ch) +*/ read_while(is_id);
+		std::string id = read_while(is_id);
 
 		return token(is_keyword(keywords, id) ? "kw" : "var", id);
 	}
 
 	void tokenizer::skip() {
-		std::string str = read_while(is_newline);
-		input.next();
+		std::string line = input.readline();
+		//input.next();
 	}
 
 	token tokenizer::read_next() {
@@ -267,11 +268,11 @@ namespace snack {
 
 		s8 ch = input.peek();
 
-		if (ch == -1) {
+		if (ch <0) {
 			return token("eof", "-1");
 		}
 
-		if (ch == '\n' || ch == '\t' || ch == ' ') {
+		if (ch == '\n' || ch == '\t' || ch==' ') {
 			if (!hidden_token) {
 				if (ch == '\n')
 				{
@@ -279,7 +280,7 @@ namespace snack {
 					return token("new_line", "\n");
 				}
 				else {
-					while (ch == '\t' || ch == ' ') {
+					while (ch == '\t'|| ch == ' ') {
 						ch = input.next();
 					}
 
@@ -290,7 +291,7 @@ namespace snack {
 					
 			}
 			else {
-				while (ch == '\n' || ch == '\t' || ch == ' ') {
+				while (ch == '\n' || ch == '\t'|| ch == ' ') {
 					ch = input.next();
 				}
 
@@ -326,27 +327,11 @@ namespace snack {
 			return token("op", read_while(is_op_char));
 		}
 
-		return token();
+		return token("unidentified", std::string(1,ch));
 	}
 
 	token tokenizer::get_next() {
-		if (token_pointer > tokens.size()) {
-			token new_token = read_next();
-
-			for (auto tok : tokens) {
-				if (tok == new_token)
-					return tok;
-			}
-
-			tokens.push_back(new_token);
-		
-			token_pointer++;
-
-			return new_token;
-		}
-
-		return tokens[token_pointer++];
-		
+		return read_next();
 	}
 
 	token tokenizer::peek_next() {

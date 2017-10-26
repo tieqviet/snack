@@ -80,6 +80,7 @@
     <ClCompile Include="src\sconst.cpp" />
     <ClCompile Include="src\sparser.cpp" />
     <ClCompile Include="src\spis.cpp" />
+    <ClCompile Include="src\spreprocessor.cpp" />
     <ClCompile Include="src\ststruct.cpp" />
     <ClCompile Include="src\stexp.cpp" />
     <ClCompile Include="src\stokenizer.cpp" />

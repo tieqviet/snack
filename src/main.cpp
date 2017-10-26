@@ -27,13 +27,14 @@ void parse_argument(char* arg) {
 
 int main(int argc, char** argv) {
 
-	if ((argv[argc - 1] == "") || (*argv[argc - 1] == '-')) {
+	if ((argv[argc - 1] == "") || (*argv[argc - 1] == '-') || (argc == 1)) {
 		std::cout << "File not specified. Try again!!" << std::endl;
+		return 0;
 	}
 
 	stream.open(argv[argc - 1]);
 	
-	if (stream.fail()) {
+	if (stream.fail() || stream.bad()) {
 		std::cout << "File has bad bit or does not exists. Try again :)" << std::endl;
 		return 0;
 	}
