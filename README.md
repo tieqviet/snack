@@ -64,4 +64,6 @@ a("Hi, I'm a scirpt!");
 - Options list:
 	* -e: Stop at the preprocessing step and print the result to the standard i/o. If there is no compiling option, the complier does it normals.
 	
+- For ant compliers, generate the makefile using cmake with the cmakelist file given.
+	
 - The code is extremely ugly and unoptimized right now.
