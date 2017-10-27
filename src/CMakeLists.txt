@@ -11,6 +11,7 @@ set (SRCS
 		stexp.cpp)
 
 set (HEADERS
+		serror.h
 		sconst.h
 		sparser.h
 		spreprocessor.h

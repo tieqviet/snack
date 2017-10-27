@@ -35,10 +35,10 @@ namespace snack {
 
 		if (tok.value == "(") {
 
-			tok = lexer.get_next();
+			tok = read_next();
 
 			while (tok.value != ")") {
-				tok = lexer.get_next();
+				tok = read_next();
 
 				if (tok.type != "var") {
 					if (tok.value == ",") {
@@ -80,10 +80,10 @@ namespace snack {
 
 		if (tok.value == "(") {
 
-			tok = lexer.get_next();
+			tok = read_next();
 
 			while (tok.value != ")") {
-				tok = lexer.get_next();
+				tok = read_next();
 
 				if ((tok.type == "var") || (tok.type == "str") || (tok.type == "num")) {
 					if (!identified) {
@@ -114,43 +114,25 @@ namespace snack {
 		return paras;
 	}
 
+	token spreprocessor::read_next() {
+		token tok = lexer.get_next();
+
+		return tok;
+	}
 
 	std::string spreprocessor::_parse_mar_cont() {
 		std::string marco_cont;
-
+	
 		bool null_terminited = false;
 
-		s8 c = lexer.get_stream().peek();
-
-		for (;;) {
-			c = lexer.get_stream().next();
-
-			if (c == '\\') {
-				null_terminited = true;
-				//delete characters
-			}
-			else {
-				if ((null_terminited) && (c == '\n')) {
-					null_terminited = false;
-				}
-				else if (!null_terminited) {
-					if (c == '\n')
-						break;
-					else if (c != '\\')
-						marco_cont += c;
-					//delete characters
-				}
-			}
-		}
-
-		marco_cont = trim(marco_cont);
-
+		marco_cont = trim(lexer.get_stream().readline());
+		
 		return marco_cont;
 	}
 
 	bool spreprocessor::_parse_pre_def_statement() {
 		u32 pos = lexer.get_pos_num();
-		token tok = lexer.get_next();
+		token tok = read_next();
 
 		if (tok.type == "new_line") {
 			complier_error("Expected an identifier");
@@ -186,7 +168,7 @@ namespace snack {
 
 	bool spreprocessor::_parse_pre_undef_statement() {
 		u32 pos = lexer.get_pos_num();
-		token tok = lexer.get_next();
+		token tok = read_next();
 
 		if (tok.type == "new_line") {
 			complier_error("Expected an identifier");
@@ -263,7 +245,7 @@ namespace snack {
 		if (paras.size() != 0) {
 			/*
 			while (tok.type != "eof") {
-			tok = mar_lexer.get_next();
+			tok = mar_read_next();
 
 			if (tok.type == "var") {
 			for (u32 i = 0; i < mar.template_parameters.size(); i++) {
@@ -293,7 +275,7 @@ namespace snack {
 	bool spreprocessor::_parse_pre_incl_statement() {
 		u32 pos = lexer.get_pos_num();
 
-		token tok = lexer.get_next();
+		token tok = read_next();
 
 		if (tok.type != "str") {
 			complier_error("Invalid parameter after incl");
@@ -313,11 +295,29 @@ namespace snack {
 	bool spreprocessor::process() {
 		token tok;
 
+		//Pass 1: Parsing the backslash
+		while (tok.type != "eof") {
+			tok = lexer.read_next();
+
+			if (tok.value == std::string(1,'\\')) {
+				if (tok.value == std::string(1, '\\')) {
+					u32 tpos = lexer.get_pos_num();
+					lexer.get_stream().readline();
+
+					lexer.get_stream().erase(tpos, lexer.get_pos_num());
+				}
+			}
+		}
+
+		lexer.get_stream().set_pos(1);
+		tok.type = ""; tok.value = "";
+
+
 		while (tok.type != "eof") {
 
 			if (_is_pr_line()) {
-				tok = lexer.get_next();
-				tok = lexer.get_next();
+				tok = read_next();
+				tok = read_next();
 
 				if (_is_preprocess_word(tok.value) == -1) {
 					complier_error("Unidentified keyword after $");
@@ -343,8 +343,8 @@ namespace snack {
 			}
 			else {
 				//FIND MARCO
-				tok = lexer.get_next();
-
+				tok = read_next();
+				
 				while ((tok.type != "new_line")) {
 
 					if (tok.type == "eof")
@@ -357,7 +357,7 @@ namespace snack {
 						}
 					}
 
-					tok = lexer.get_next();
+					tok = read_next();
 
 				}
 

@@ -89,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\sconst.h" />
+    <ClInclude Include="src\serror.h" />
     <ClInclude Include="src\sfunc.h" />
     <ClInclude Include="src\sparser.h" />
     <ClInclude Include="src\spis.h" />

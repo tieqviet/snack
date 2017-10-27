@@ -9,6 +9,7 @@
 #include "stexp.h"
 #include "stfunc.h"
 #include "stvar.h"
+#include "ststruct.h"
 
 
 namespace snack {
@@ -47,11 +48,16 @@ namespace snack {
 		std::vector<stfunc*> funcs;
 		std::vector<sttype*> defined_types;
 
+		std::vector<smem> mems;
+
 		tokenizer lexer;
 
 		sttype* _parse_var_type();
 		stvar* _parse_var();
 		sttype* _parse_define_statement();
+
+		ststruct* _parse_struct();
+		stfunc* _parse_func();
 
 	public:
 

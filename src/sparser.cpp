@@ -5,8 +5,8 @@ namespace snack {
 
 	sparser::sparser(tokenizer& p_tokenizer) : lexer(p_tokenizer) {};
 
-	stfunc* _parse_func() {
-		stfunc* func;
+	stfunc* sparser::_parse_func() {
+		stfunc* func; //= new (&mems) stfunc();
 
 		return func;
 	}
@@ -187,6 +187,19 @@ namespace snack {
 			return base_type;
 		}
 	}
-	
+
+	ststruct* sparser::_parse_struct() {
+		ststruct* snstruct;
+
+		token tok = lexer.get_next();
+
+		if (_is_keyword(tok)) {
+			complier_error("Defined type name is keyword");
+			return nullptr;
+		}
+
+		snstruct->name = tok.value;
+
+	}
 
 }

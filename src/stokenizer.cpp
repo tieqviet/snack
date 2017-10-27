@@ -299,6 +299,8 @@ namespace snack {
 			}
 		}
 
+		
+
 		if (ch == '#') {
 			skip();
 			return read_next();

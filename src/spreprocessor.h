@@ -55,6 +55,8 @@ namespace snack {
 		bool _paste_marco(smarco mar);
 		bool _parse_pre_incl_statement();
 
+		token read_next();
+
 	public:
 
 		spreprocessor() = default;

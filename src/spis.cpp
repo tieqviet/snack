@@ -143,7 +143,7 @@ namespace snack {
 			pos_af -= (end-bg + 1);
 		}
 
-		pos = pos_af-1;
+		pos = pos_af+1;
 
 		input.clear();
 		input.seekg(pos_af);
