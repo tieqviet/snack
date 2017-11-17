@@ -23,7 +23,7 @@ namespace snack {
 		write_only_mem_qual = 8
 	};
 
-	struct stvar: public stnode<stvar> {
+	struct stvar: public stnode {
 
 		std::string name;
 		int		    type;

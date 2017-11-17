@@ -6,7 +6,7 @@
 namespace snack{
 	class ststatement;
 
-	class stfunc: public stnode<stfunc> {
+	class stfunc: public stnode {
 		std::vector<ststatement*> statements;
 		std::vector<stvar*> parameters;
 

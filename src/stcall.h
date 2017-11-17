@@ -8,7 +8,7 @@
 
 namespace snack {
 
-	class stcall : public stnode<stcall> {
+	class stcall : public stnode {
 
 		std::string callee;
 		//std::vector<stexp> arguments;

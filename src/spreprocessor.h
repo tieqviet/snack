@@ -47,6 +47,10 @@ namespace snack {
 		std::string				 _parse_mar_cont();
 		bool					 _parse_pre_def_statement();
 
+		void					 _parse_pre_blackslash();
+
+		friend void                     _rmv_blsh(tokenizer& __strm);
+
 		bool _parse_pre_undef_statement();
 
 		s32 _find_marcos(token tok);

@@ -234,7 +234,7 @@ namespace snack {
 	}
 
 	token tokenizer::read_string(s8 end) {
-		return token("str", read_escaped(end));
+		return token("literal", read_escaped(end));
 	}
 
 	token tokenizer::read_number(u8 ch) {
@@ -246,7 +246,7 @@ namespace snack {
 	token tokenizer::read_ident(u8 ch) {
 		std::string id = read_while(is_id);
 
-		return token(is_keyword(keywords, id) ? "kw" : "var", id);
+		return token(is_keyword(keywords, id) ? "kw" : "ident", id);
 	}
 
 	void tokenizer::skip() {
@@ -329,6 +329,7 @@ namespace snack {
 			return token("op", read_while(is_op_char));
 		}
 
+		ch = input.next();
 		return token("unidentified", std::string(1,ch));
 	}
 

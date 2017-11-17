@@ -1,6 +1,7 @@
-$incl 'script2.sn'
+$def WEBTITLE bentokun_test
 
-$def a(ppp) std::cout << ppp \
- lol
+$incl 'head.html'
 
-a("Hi, I'm a scirpt!");
+<body>
+<h1>HELLO</h1>
+</body>

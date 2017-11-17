@@ -7,7 +7,7 @@
 #include <memory>
 
 namespace snack {
-	class stbin : public stnode<stbin> {
+	class stbin : public stnode {
 
 		std::string op;
 		std::unique_ptr<stnode> lhs, rhs;

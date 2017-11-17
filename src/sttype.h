@@ -24,7 +24,7 @@ namespace snack {
 		ant_type = 1 << 15
 	};
 
-	struct sttype : public stnode<sttype> {
+	struct sttype : public stnode {
 
 		bool is_built_in;
 		bool is_pointer;

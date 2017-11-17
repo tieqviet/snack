@@ -88,6 +88,7 @@
     <ClCompile Include="src\sutils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\sallocator.h" />
     <ClInclude Include="src\sconst.h" />
     <ClInclude Include="src\serror.h" />
     <ClInclude Include="src\sfunc.h" />
@@ -97,9 +98,12 @@
     <ClInclude Include="src\stbin.h" />
     <ClInclude Include="src\stbuiltin.h" />
     <ClInclude Include="src\stcall.h" />
+    <ClInclude Include="src\stcontext.h" />
+    <ClInclude Include="src\stdecl.h" />
     <ClInclude Include="src\stexp.h" />
     <ClInclude Include="src\stfunc.h" />
     <ClInclude Include="src\stokenizer.h" />
+    <ClInclude Include="src\ststmt.h" />
     <ClInclude Include="src\ststruct.h" />
     <ClInclude Include="src\sttype.h" />
     <ClInclude Include="src\stvar.h" />

@@ -107,9 +107,16 @@ namespace snack {
 		std::string bgn = input.str();
 		u64 npos = input.tellp();
 
-		bgn = bgn.substr(inp_pos, bgn.size());
-		s8 ct;
+		input.seekg(0, std::ios::end);
 
+		try {
+			bgn = bgn.substr(inp_pos, bgn.size());
+		}
+		catch (...) {
+
+		}
+
+		s8 ct;
 
 		input.clear();
 		input.seekp(inp_pos-1,std::ios::cur);

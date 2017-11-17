@@ -1,3 +1,4 @@
+/*
 #include "sparser.h"
 #include "stfunc.h"
 
@@ -5,8 +6,8 @@ namespace snack {
 
 	sparser::sparser(tokenizer& p_tokenizer) : lexer(p_tokenizer) {};
 
-	stfunc* sparser::_parse_func() {
-		stfunc* func; //= new (&mems) stfunc();
+	stfunc sparser::_parse_func() {
+		stfunc func; //= new (&mems) stfunc();
 
 		return func;
 	}
@@ -31,7 +32,7 @@ namespace snack {
 		if (tok.type == "kw")  return false;
 
 		for (auto t: defined_types) {
-			if (tok.value == t->name) {
+			if (tok.value == t.name) {
 				if (dtp != nullptr)	
 					dtp = t;
 				
@@ -58,7 +59,7 @@ namespace snack {
 		return tok.type == "pun";
 	}
 
-	sttype* sparser::_parse_var_type() {
+	sttype sparser::_parse_var_type() {
 		token tok = lexer.get_next();
 		std::string type_name;
 
@@ -69,7 +70,7 @@ namespace snack {
 				}
 			}
 
-			stbuiltin* ptype;
+			stbuiltin ptype;
 
 			ptype->name = type_name;
 
@@ -142,28 +143,28 @@ namespace snack {
 
 	}
 
-	stvar* sparser::_parse_var() {
-		stvar* var;
+	stvar sparser::_parse_var() {
+		stvar var;
 
 		token tok = lexer.get_next();
 
-		var->set_name(tok.value);
+		var.set_name(tok.value);
 
 		tok = lexer.get_next();
 
 		if ((tok.type != "kw") || (tok.value == "as")) {
 			complier_error("Type identifier expected");
 
-			return nullptr;
+			return stvar();
 		}
 
-		var->base_type = _parse_var_type();
+		var.base_type = _parse_var_type();
 
 		return var;
 	}
 
-	sttype* sparser::_parse_define_statement() {
-		sttype* base_type = _parse_var_type();
+	sttype sparser::_parse_define_statement() {
+		sttype base_type = _parse_var_type();
 
 		token tok = lexer.get_next();
 
@@ -188,8 +189,8 @@ namespace snack {
 		}
 	}
 
-	ststruct* sparser::_parse_struct() {
-		ststruct* snstruct;
+	ststruct sparser::_parse_struct() {
+		ststruct snstruct;
 
 		token tok = lexer.get_next();
 
@@ -200,6 +201,8 @@ namespace snack {
 
 		snstruct->name = tok.value;
 
+		tok = lexer.get_next();
 	}
 
-}
+	
+}*/

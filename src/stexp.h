@@ -29,20 +29,23 @@ namespace snack {
 
 	};
 
-	template <typename T>
+	struct spos {
+		s64 line;
+		s64 col;
+
+		s64 pos;
+	};
+
+
+	//template <typename T>
 	class stnode {
 
 	protected:
 
-		struct node_pos {
-			s64 line;
-			s64 col;
-
-			s64 pos;
-		} pos;
-
+		spos nodepos;
 
 	public:
+		/*
 		void* operator new(size_t size, std::vector<smem> *collector) throw() {
 			void* data = std::malloc(size);
 
@@ -51,22 +54,26 @@ namespace snack {
 
 			return data;
 		}
-
+		*/
 		stnode() {};
-		stnode(s64 line, s64 col, s64 pos) : line(pos.line), col(pos.col), pos(pos.pos) {};
+		stnode(s64 p_line, s64 p_col, s64 p_pos) {
+			nodepos.line = p_line;
+			nodepos.col = p_col;
+			nodepos.pos = p_pos;
+		};
 
-		void set_pos(node_pos pos) {
-			this->pos = pos;
+		void set_pos(spos pos) {
+			nodepos = pos;
 		}
 
-		node_pos get_pos() {
-			return pos;
+		spos get_pos() {
+			return nodepos;
 		}
 
 		virtual ~stnode() { };
 	};
 
-	class stexp : public stnode<stexp> {
+	class stexp : public stnode {
 
 	protected:
 
