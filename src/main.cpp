@@ -41,6 +41,7 @@ int main(int argc,char** argv) {
 	snack::token tok = spist.read_next();
 	sppi._dir_par(tok);
 	tok = spist.read_next();
+	sppi._dir_par(tok);
 }
 
 /*

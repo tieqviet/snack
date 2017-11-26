@@ -206,7 +206,7 @@ namespace snack {
 		}
 	}
 
-	u32 spp::_is_ppkw(token _tk) {
+	s32 spp::_is_ppkw(token _tk) {
 		for (u32 i = 0; i < PRPRWC; i++) {
 			if (_tk.value == preprocess_keywords[i])
 				return i;
@@ -261,7 +261,7 @@ namespace snack {
 		if (lexer->peek_next().value == "(") {
 			lexer->read_next();
 
-			_func_macr_par(_tk);
+			_func_macr_par(name);
 
 			return token{};
 		}
@@ -273,7 +273,11 @@ namespace snack {
 
 	token spp::_dir_par(token _tk) {
 		token _tk2 = lexer->read_next();
-		u32 tkp = _is_ppkw(_tk2);
+		s32 tkp = _is_ppkw(_tk2);
+
+		if (tkp == -1) {
+			return token{};
+		}
 
 		std::string kw = preprocess_keywords[tkp];
 
@@ -300,8 +304,6 @@ namespace snack {
 		token_map _pmap;
 		smacro _pmacr;
 
-		lexer->read_next();
-
 		_pmacr.name = _tk.value;
 
 		_func_macr_params_par(_tk, _pmap);
@@ -318,7 +320,7 @@ namespace snack {
 		int pos = 0;
 
 		for (;;) {
-			token tok = lexer->peek_next();
+			token tok = lexer->read_next();
 
 			token argz; argz.type = "marco";
 
@@ -326,12 +328,11 @@ namespace snack {
 				return false;
 
 			if (pos) {
-				tok = lexer->get_next();
-				lexer->expect(",");
-				tok = lexer->get_next();
+				if (tok.value != ",") complier_error(", expected but " + tok);
+				tok = lexer->read_next(); 
 			}
 
-			if (tok.type == "newline") {
+			if (tok.type == "newline")  {
 				complier_error("Missing ')' in parameter list");
 			}
 			if (tok.value == "?~") {
@@ -354,7 +355,7 @@ namespace snack {
 			argz.is_vararg = true;
 			argz.value = arg;
 
-			if (lexer->read_next().value == "?~") {
+			if (lexer->peek_next().value == "?~") {
 				lexer->expect(")");
 
 				lexer->read_next();
@@ -365,6 +366,7 @@ namespace snack {
 			}
 
 			_params.insert(std::make_pair(arg, argz));
+
 		}
 	}
 
@@ -379,10 +381,10 @@ namespace snack {
 			}
 			
 			if (tok.type == "ident") {
-				token param = _params[tok.value];
+				auto res = _params.find(tok.value);
 
-				if (param.type != "unassigned") {
-					tok.value = param.value;
+				if (res!= _params.end()) {
+					//tok.value = (*res).second.value;
 					b_sc.push_back(tok);
 
 					continue;

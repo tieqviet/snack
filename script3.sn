@@ -1,2 +1,2 @@
-$def PI a
+$def PI(b,c) a
 $undef PI

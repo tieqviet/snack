@@ -11,7 +11,7 @@
 
 #include "stype.h"
 
-#define PRPRWC 7
+#define PRPRWC 8
 
 namespace snack {
 
@@ -36,7 +36,7 @@ namespace snack {
 
 	const std::string preprocess_keywords[PRPRWC] = {
 		"def",
-		"undef"
+		"undef",
 		"ndef",
 		"not",
 		"if",
@@ -83,7 +83,7 @@ namespace snack {
 		token _define_par(token _tk);
 		token _undef_par(token _tk);
 
-		u32 _is_ppkw(token _tk);
+		s32 _is_ppkw(token _tk);
 		
 	};
 
