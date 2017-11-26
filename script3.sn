@@ -1,9 +1,2 @@
-$def PI \ 
-3.14
-
-a=PI*5;
-
+$def PI a
 $undef PI
-
-PI = 5;
-b=PI * 6;

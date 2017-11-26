@@ -18,16 +18,10 @@
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\sconst.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\sparser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\spis.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\stexp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\stokenizer.cpp">
@@ -42,33 +36,21 @@
     <ClCompile Include="src\ststruct.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\spreprocessor.cpp">
+    <ClCompile Include="src\sast.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stexp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\spp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\sconst.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\sfunc.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\sparser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\spis.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\stbin.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\stbuiltin.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\stcall.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\stexp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\stfunc.h">
@@ -77,37 +59,22 @@
     <ClInclude Include="src\stokenizer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ststruct.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\sttype.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\stvar.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\stype.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\sutils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\spreprocessor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\serror.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ststmt.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\stdecl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\stcontext.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\sallocator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\spp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

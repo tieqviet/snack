@@ -1,8 +1,10 @@
 #pragma once
 
 #include <string>
+#include <stack>
+#include <map>
 
-#include "sttype.h"
+#include "stype.h"
 #include "stokenizer.h"
 
 #define PRPRWC 7
@@ -25,13 +27,13 @@ namespace snack {
 	struct smarco {
 		std::string name;
 
-		std::vector<std::string> template_parameters;
+		std::stack<std::string> template_parameters;
 		std::string main_marco;
 	};
 
 	class spreprocessor {
 		
-		std::vector<smarco> defined_marcos;
+		std::map<std::string, smarco> defined_marcos;
 		tokenizer lexer;
 
 		bool _is_preprocess_word(std::string p_val) {
@@ -50,6 +52,10 @@ namespace snack {
 		void					 _parse_pre_blackslash();
 
 		friend void                     _rmv_blsh(tokenizer& __strm);
+		friend s64                     	_evaluate(tokenizer& __strm);
+
+		friend std::stack<token>        _itp_e(tokenizer& __strm);
+		friend s64                      _pte_e(tokenizer& __strm);	
 
 		bool _parse_pre_undef_statement();
 

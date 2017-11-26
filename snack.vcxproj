@@ -77,36 +77,25 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\sconst.cpp" />
+    <ClCompile Include="src\sast.h" />
     <ClCompile Include="src\sparser.cpp" />
     <ClCompile Include="src\spis.cpp" />
-    <ClCompile Include="src\spreprocessor.cpp" />
-    <ClCompile Include="src\ststruct.cpp" />
+    <ClCompile Include="src\spp.cpp" />
     <ClCompile Include="src\stexp.cpp" />
+    <ClCompile Include="src\ststruct.cpp" />
     <ClCompile Include="src\stokenizer.cpp" />
     <ClCompile Include="src\sttype.cpp" />
     <ClCompile Include="src\sutils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\sallocator.h" />
-    <ClInclude Include="src\sconst.h" />
     <ClInclude Include="src\serror.h" />
-    <ClInclude Include="src\sfunc.h" />
     <ClInclude Include="src\sparser.h" />
     <ClInclude Include="src\spis.h" />
-    <ClInclude Include="src\spreprocessor.h" />
-    <ClInclude Include="src\stbin.h" />
-    <ClInclude Include="src\stbuiltin.h" />
-    <ClInclude Include="src\stcall.h" />
+    <ClInclude Include="src\spp.h" />
     <ClInclude Include="src\stcontext.h" />
-    <ClInclude Include="src\stdecl.h" />
-    <ClInclude Include="src\stexp.h" />
     <ClInclude Include="src\stfunc.h" />
     <ClInclude Include="src\stokenizer.h" />
-    <ClInclude Include="src\ststmt.h" />
-    <ClInclude Include="src\ststruct.h" />
-    <ClInclude Include="src\sttype.h" />
-    <ClInclude Include="src\stvar.h" />
     <ClInclude Include="src\stype.h" />
     <ClInclude Include="src\sutils.h" />
   </ItemGroup>

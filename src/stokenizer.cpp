@@ -40,7 +40,7 @@ namespace snack {
 		std::string str(1, c);
 		std::smatch m;
 
-		bool res = std::regex_search(str, m, std::regex("[$\"=%:*+-><=\'!|&]"));
+		bool res = std::regex_search(str, m, std::regex("[$\"=%:*+-><=\'!|&?~]"));
 	
 		return res;
 
@@ -192,7 +192,7 @@ namespace snack {
 	}
 
 	void tokenizer::optional_tokens_set_visibility(bool vis) {
-		hidden_token = vis;
+		hidden_token = !vis;
 	}
 
 	std::string tokenizer::read_while(predicate_char_func func) {
@@ -254,6 +254,13 @@ namespace snack {
 		//input.next();
 	}
 
+	void tokenizer::expect(std::string _pe) {
+		if (peek_next().value != _pe) {
+			complier_error("Got ? expected ?");
+			return;
+		}
+	}
+
 	token tokenizer::read_next() {
 
 		u32 line_num = input.get_line_number();
@@ -277,7 +284,7 @@ namespace snack {
 				if (ch == '\n')
 				{
 					ch = input.next();
-					return token("new_line", "\n");
+					return token("newline", "\n");
 				}
 				else {
 					while (ch == '\t'|| ch == ' ') {
@@ -298,8 +305,6 @@ namespace snack {
 				input.set_pos(input.get_pos_number() - 1);
 			}
 		}
-
-		
 
 		if (ch == '#') {
 			skip();

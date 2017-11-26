@@ -25,16 +25,6 @@ namespace snack {
 	bool is_newline(s8 c);
 	bool is_numbering_vaild(s8 c);
 
-	struct token {
-		std::string type;
-		std::string value;
-
-		token(std::string type, std::string val);
-		token();
-
-		bool operator == (token rhs);
-	};
-
 	class tokenizer {
 
 		std::vector<token> tokens;
@@ -70,6 +60,10 @@ namespace snack {
 		token get_next();
 		token read_next();
 		token peek_next();
+
+		//token read_once(std::string _v);
+
+		void expect(std::string _pe);
 
 		spis& get_stream();
 

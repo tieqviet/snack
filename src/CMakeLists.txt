@@ -2,8 +2,7 @@ set (SRCS
 		main.cpp
 		sconst.cpp
 		sparser.cpp
-		spreprocessor.cpp
-		stokenizer.cpp
+		spp.cpp
 		spis.cpp
 		sutils.cpp
 		sttype.cpp
@@ -14,18 +13,13 @@ set (HEADERS
 		serror.h
 		sconst.h
 		sparser.h
-		spreprocessor.h
+		spp.h
 		stokenizer.h
+		sallocator.h
 		spis.h
-		sutils.h
-		sttype.h
-		ststruct.h
-		stexp.h
 		stype.h
-		stvar.h
-		stfunc.h
-		stbin.h
-		stbuiltin.h
-		stcall.h)
+		sast.h
+		sutils.h
+		scontext.h)
 
 add_executable(snack ${SRCS} ${HEADERS})	

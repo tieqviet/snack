@@ -1,5 +1,8 @@
 #pragma once
 
+#include <string>
+#include <set>
+
 #define complier_error(x)
 
 typedef unsigned int u32;
@@ -16,3 +19,26 @@ typedef long s64;
 
 typedef unsigned long long usize;
 typedef long long ssize;
+
+namespace snack {
+	struct token {
+		std::string type = "unassigned";
+		std::string value = "unassigned";
+
+		std::set<std::string> hidesets;
+
+		bool bol;
+
+		token(std::string type, std::string val);
+		token();
+
+		bool operator == (token rhs);
+
+		u32 id = -1;
+
+		bool is_vararg = false;
+		u32 arg_pos = -1;
+			
+	};
+}
+

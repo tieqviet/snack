@@ -1,0 +1,24 @@
+#If we don't set unit, the complier will automaticlly use file name as unit name
+unit math_vector;
+
+$prag marc: on
+
+uses 
+	sse;
+	
+struct vec2 ~ pub object with
+	private x, y as int;
+	
+	pub func len => int 
+	bg
+		ret sqrt(x*x + y*y);
+	end
+	
+	pub vec2(x,y) ~ self.x(x), self.y(y) bg end
+	
+pub func (vec2.normalize) with a as int => int
+bg
+end
+	
+#This also dectect the type
+console.writeln('Math Vector Package loaded');
