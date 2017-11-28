@@ -3,6 +3,7 @@
 #include <fstream>
 #include <vector>
 #include <regex>
+#include <stack>
 
 #include "spis.h"
 #include "stype.h"
@@ -27,7 +28,7 @@ namespace snack {
 
 	class tokenizer {
 
-		std::vector<token> tokens;
+		std::stack<token> tokens_pending;
 
 		u32 token_pointer;
 
@@ -44,6 +45,17 @@ namespace snack {
 	public:
 
 		void skip();
+
+		void add_pending_token(token t) {
+			tokens_pending.push(t);
+		}
+
+		template <typename T>
+		void add_pending_tokens(T _ts) {
+			for (auto _t : _ts) {
+				add_pending_token(_t);
+			}
+		}
 
 		u32 get_line_num() {
 			return input.get_line_number();

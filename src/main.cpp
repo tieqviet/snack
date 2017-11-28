@@ -42,6 +42,9 @@ int main(int argc,char** argv) {
 	sppi._dir_par(tok);
 	tok = spist.read_next();
 	sppi._dir_par(tok);
+	tok = spist.read_next();
+	tok = sppi._expd(tok);
+	sppi._dir_par(tok);
 }
 
 /*

@@ -169,6 +169,10 @@ namespace snack {
 		return nde;
 	}
 
+	void spp::_propagate(_tk_de _tkm, token tmpl) {
+		//_tkm[0] = tmpl;
+	}
+
 	token spp::_expd_nl(token _tk) {
 		if (_tk.type != "ident")
 			return _tk;
@@ -176,7 +180,7 @@ namespace snack {
 		std::string name = _tk.value;
 		smacro marc = macros[name];
 
-		//If marco does not exists
+		//If marco does not exists or is in the hideset
 		if (marc.name == "" || _tk.hidesets.find(name) != _tk.hidesets.end()) {
 			return _tk;
 		}
@@ -186,6 +190,9 @@ namespace snack {
 			_tk.hidesets.emplace(name);
 			std::deque<token> tks = _subst(marc, std::deque<token>{}, _tk.hidesets);
 
+			lexer->add_pending_tokens<std::deque<token>>(tks);
+
+			//_propagate(tks, _tk);
 			return _expd(lexer->read_next());
 		}
 
@@ -219,7 +226,7 @@ namespace snack {
 		for (;;) {
 			token tke = _expd_nl(_tk);
 
-			if (tke.value != "newline")
+			if (tke.type != "newline")
 				return tke;
 		}
 	}

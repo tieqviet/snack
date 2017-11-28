@@ -53,12 +53,13 @@ namespace snack {
 		using macro_map = std::map<std::string, smacro>;
 		using token_map = std::map<std::string, token>;
 		using _bd_sco_mc = std::vector<token>;
+		using _tk_de = std::deque<token>;
 
 		macro_map macros;
 
 		//A pointer to the lexer
 		tokenizer* lexer;
-
+		void _propagate(_tk_de _tkm, token tmpl);
 		void _glue_push(std::deque<token> _tks, token _tk);
 		token _glue_tk(token _tk1, token _tk2);
 		std::deque<token> _add_hs(std::deque<token> _tks, std::set<std::string> _hs);

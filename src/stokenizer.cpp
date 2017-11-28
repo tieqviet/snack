@@ -263,6 +263,13 @@ namespace snack {
 
 	token tokenizer::read_next() {
 
+		if (tokens_pending.size() > 0) {
+			token t = tokens_pending.top();
+			tokens_pending.pop();
+			
+			return t;
+		}
+
 		u32 line_num = input.get_line_number();
 		std::string unneed;
 
@@ -343,12 +350,10 @@ namespace snack {
 	}
 
 	token tokenizer::peek_next() {
-		u64   _pos   = input.get_pos_number();
-		token tok   = get_next();
+		token t = read_next();
+		tokens_pending.push(t);
 
-		input.set_pos(_pos);
-
-		return tok;
+		return t;
 	}
 
 	void tokenizer::reset_token_pointer() {
