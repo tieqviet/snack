@@ -1,4 +1,4 @@
-$def PI a + 5
-$def H PI
-H
+$def PI(a) a + 5
+$def H(b) PI(b)
+H(c)
 $undef PI

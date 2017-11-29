@@ -3,7 +3,7 @@
 #include <fstream>
 #include <vector>
 #include <regex>
-#include <stack>
+#include <queue>
 
 #include "spis.h"
 #include "stype.h"
@@ -28,7 +28,7 @@ namespace snack {
 
 	class tokenizer {
 
-		std::stack<token> tokens_pending;
+		std::queue<token> tokens_pending;
 
 		u32 token_pointer;
 

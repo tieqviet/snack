@@ -174,8 +174,9 @@ namespace snack {
 	}
 
 	token spp::_expd_nl(token _tk) {
-		if (_tk.type != "ident")
+		if (_tk.type != "ident") {
 			return _tk;
+		}
 
 		std::string name = _tk.value;
 		smacro marc = macros[name];
@@ -187,30 +188,33 @@ namespace snack {
 
 		switch (marc.marco_kind) {
 		case smacro::kind::object: {
+			
 			_tk.hidesets.emplace(name);
 			std::deque<token> tks = _subst(marc, std::deque<token>{}, _tk.hidesets);
 
 			lexer->add_pending_tokens<std::deque<token>>(tks);
-
-			//_propagate(tks, _tk);
-			return _expd(lexer->read_next());
+			break;
 		}
 
 		case smacro::kind::function: {
+			auto args = _read_args(_tk, marc);
+
 			_tk.hidesets.emplace(name);
 			std::deque<token> tks = _subst(marc, std::deque<token>{}, _tk.hidesets);
 
-			return _expd(lexer->read_next());
+			lexer->add_pending_tokens<std::deque<token>>(tks);
+			break;
 		}
-		case smacro::kind::special: {
+		case smacro::kind::special: 
 			marc.special_marco_handler(_tk);
+			break;
 
-			return _expd(lexer->read_next());
-		}
 		default:
 			complier_error("Unknown type of marco");
-
+			break;
 		}
+	
+		return _expd(lexer->read_next());
 	}
 
 	s32 spp::_is_ppkw(token _tk) {
@@ -228,6 +232,9 @@ namespace snack {
 
 			if (tke.type != "newline")
 				return tke;
+			else {
+				return _expd(lexer->read_next());
+			}
 		}
 	}
 
@@ -319,6 +326,8 @@ namespace snack {
 		for (auto m : _pmap) {
 			_pmacr.args.push_back(m.second);
 		}
+
+		_pmacr.marco_kind = smacro::function;
 
 		macros.insert(std::make_pair(_tk.value,_pmacr));
 	}

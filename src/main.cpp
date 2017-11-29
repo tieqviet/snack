@@ -15,7 +15,7 @@ snack::spp sppi;
 
 bool process_spec = false;
 
-int main(int argc,char** argv) {
+int main(int argc, char** argv) {
 	std::cout << "SNACK COMPLIER" << std::endl;
 	std::cout << "(C) 2017 - present Trong Thu Do" << std::endl;
 
@@ -35,16 +35,23 @@ int main(int argc,char** argv) {
 	spist = snack::tokenizer(spiss);
 
 	spist.optional_tokens_set_visibility(true);
-
 	sppi.lexer = &spist;
 
-	snack::token tok = spist.read_next();
-	sppi._dir_par(tok);
-	tok = spist.read_next();
-	sppi._dir_par(tok);
-	tok = spist.read_next();
-	tok = sppi._expd(tok);
-	sppi._dir_par(tok);
+	snack::token tok;
+
+	while (tok.type != "eof") {
+		tok = spist.read_next();
+		tok = sppi._expd(tok);
+
+		if (tok.value == "$") {
+			sppi._dir_par(tok);
+		}
+		else if (tok.value == "-1")
+			break;
+		else
+			std::cout << tok.value << " ";
+	}
+	
 }
 
 /*
