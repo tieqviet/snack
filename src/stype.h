@@ -27,8 +27,6 @@ namespace snack {
 
 		std::set<std::string> hidesets;
 
-		bool bol;
-
 		token(std::string type, std::string val);
 		token();
 
@@ -37,6 +35,10 @@ namespace snack {
 		u32 id = -1;
 
 		bool is_vararg = false;
+
+		bool bol = false;
+		bool is_marco_param = false;
+
 		u32 arg_pos = -1;
 			
 	};

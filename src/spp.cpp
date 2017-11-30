@@ -46,8 +46,8 @@ namespace snack {
 			token t0 = _marc.body[i];
 			token t1 = (i == _marc.body.size() - 1) ? token{} : _marc.body[i + 1];
 
-			bool t0_pr = (t0.type == "mp");
-			bool t1_pr = (t1.type == "mp") && (t1.type != "eof");
+			bool t0_pr = (t0.is_marco_param);
+			bool t1_pr = (t1.is_marco_param) && (t1.type != "eof");
 
 			//Treat the next token as original parameter
 			if ((t0.value == "@") && (t1_pr)) {
@@ -99,7 +99,10 @@ namespace snack {
 			}
 
 			if (t0_pr) {
-				
+				token narg = _args[t0.arg_pos];
+				nde.push_back(_expd(narg));
+
+				continue;
 			}
 
 			nde.push_back(t0);
@@ -108,12 +111,12 @@ namespace snack {
 		return _add_hs(nde, _hs);
 	}
 
-	std::deque<token> spp::_read_one_arg(token tok, bool readall) {
+	std::deque<token> spp::_read_one_arg(token tok,bool& end, bool readall) {
 		u32 lvl = 0;
 		std::deque<token> nde{};
 
 		for (;;) {
-			token tok = lexer->peek_next();
+			tok = lexer->peek_next();
 
 			if (tok.type == "eof") {
 				complier_error("Unterminated marco argument list");
@@ -126,6 +129,7 @@ namespace snack {
 				continue;
 			}
 			else if ((tok.value == ")") && (lvl == 0)) {
+				end = true;
 				return nde;
 			}
 			else if ((tok.value == ",") && (lvl == 0) && !readall) {
@@ -149,13 +153,13 @@ namespace snack {
 		if (marc.nargs == 0 && lexer->peek_next().value == ")")
 			return std::deque<token>{};
 		
-		lexer->get_next();
+		//lexer->get_next();
 		std::deque<token> nde;
 
 		bool end = false;
 		while (!end) {
 			bool in_ellipsis = (marc.is_varg && marc.args.size() == marc.nargs - 1);
-			std::deque<token> _hsde = _read_one_arg(tok, in_ellipsis);
+			std::deque<token> _hsde = _read_one_arg(tok, end,in_ellipsis);
 
 			for (auto& _de : _hsde) {
 				nde.push_back(_de);
@@ -200,7 +204,7 @@ namespace snack {
 			auto args = _read_args(_tk, marc);
 
 			_tk.hidesets.emplace(name);
-			std::deque<token> tks = _subst(marc, std::deque<token>{}, _tk.hidesets);
+			std::deque<token> tks = _subst(marc, args, _tk.hidesets);
 
 			lexer->add_pending_tokens<std::deque<token>>(tks);
 			break;
@@ -355,6 +359,7 @@ namespace snack {
 				argz.arg_pos = pos++;
 				argz.is_vararg = true;
 				argz.value = "dynamic_arguments";
+				argz.is_marco_param = true;
 
 				_params.insert(std::make_pair("dynamic_arguments", argz));
 				tok = lexer->get_next();
@@ -370,6 +375,7 @@ namespace snack {
 			argz.arg_pos = pos++;
 			argz.is_vararg = true;
 			argz.value = arg;
+			argz.is_marco_param = true;
 
 			if (lexer->peek_next().value == "?~") {
 				lexer->expect(")");
@@ -391,6 +397,7 @@ namespace snack {
 		
 		for (;;) {
 			token tok = lexer->read_next();
+			tok.is_marco_param = false;
 
 			if ((tok.type == "newline") || (tok.type == "eof")){
 				break;
@@ -401,13 +408,13 @@ namespace snack {
 
 				if (res!= _params.end()) {
 					//tok.value = (*res).second.value;
-					b_sc.push_back(tok);
+					b_sc.push_back((*res).second);
 
 					continue;
 				}
 			}
 
-			b_sc.push_back(tok);
+			b_sc.emplace_back(tok);
 		}
 
 		return b_sc;

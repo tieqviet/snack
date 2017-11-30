@@ -59,6 +59,7 @@ namespace snack {
 
 		//A pointer to the lexer
 		tokenizer* lexer;
+
 		void _propagate(_tk_de _tkm, token tmpl);
 		void _glue_push(std::deque<token> _tks, token _tk);
 		token _glue_tk(token _tk1, token _tk2);
@@ -67,7 +68,7 @@ namespace snack {
 		token _stringize(token _tmpl, std::deque<token> _args);
 		std::deque<token> _subst(smacro _marc, std::deque<token>_args, std::set<std::string> _hs);
 
-		std::deque<token> _read_one_arg(token tok, bool readall);
+		std::deque<token> _read_one_arg(token tok, bool& end, bool readall);
 		std::deque<token> _read_args(token tok, smacro marc);
 
 		token _expd_nl(token _tk);
