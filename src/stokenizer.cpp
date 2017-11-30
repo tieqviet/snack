@@ -264,7 +264,7 @@ namespace snack {
 	token tokenizer::read_next() {
 
 		if (tokens_pending.size() > 0) {
-			token t = tokens_pending.front();
+			token t = tokens_pending.top();
 			tokens_pending.pop();
 			
 			return t;
